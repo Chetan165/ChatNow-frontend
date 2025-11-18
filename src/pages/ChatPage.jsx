@@ -8,6 +8,7 @@ import MyChats from "@/components/MyChats";
 import { useNavigate } from "react-router-dom";
 
 const ChatPage = () => {
+  const [fetchAgain, setFetchAgain] = useState(false);
   const navigate = useNavigate();
   const { user, token } = ChatState();
   const [chats, setChats] = useState([]);
@@ -29,8 +30,10 @@ const ChatPage = () => {
         h={"91.5vh"}
         p={"10px"}
       >
-        {user && <MyChats />}
-        {user && <ChatBox />}
+        {user && <MyChats fetchAgain={fetchAgain} />}
+        {user && (
+          <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        )}
       </Box>
     </div>
   );

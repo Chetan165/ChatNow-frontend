@@ -7,6 +7,9 @@ const ChatProvider = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [user, setUser] = useState();
+  const [selectedChat, setSelectedChat] = useState();
+  const [chats, setChats] = useState([]);
+  const [openGroupDialog, setOpenGroupDialog] = useState(false);
   const Userauth = async () => {
     try {
       const res = await axios.get("http://localhost:3000/auth/", {
@@ -31,7 +34,20 @@ const ChatProvider = ({ children }) => {
     Userauth();
   }, [token]);
   return (
-    <ChatContext.Provider value={{ user, setUser, setToken, token }}>
+    <ChatContext.Provider
+      value={{
+        user,
+        setUser,
+        setToken,
+        token,
+        selectedChat,
+        setSelectedChat,
+        chats,
+        setChats,
+        openGroupDialog,
+        setOpenGroupDialog,
+      }}
+    >
       {children}
     </ChatContext.Provider>
   );

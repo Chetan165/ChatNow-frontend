@@ -27,14 +27,50 @@ import { useNavigate } from "react-router-dom";
 const SideDrawer = () => {
   const navigate = useNavigate();
   let { open, setOpen, setUser, setData } = ModalState();
-  const { user, setToken, token } = ChatState();
+  const {
+    user,
+    setToken,
+    token,
+    selectedChat,
+    setSelectedChat,
+    chats,
+    setChats,
+  } = ChatState();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [search, setSearch] = useState("");
   const [searchresult, setSearchresult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setloadingChat] = useState(false);
-  const acessChat = async (userId) => {
-    //to be implemented
+  const acessChat = async (userId, UserName) => {
+    try {
+      setloadingChat(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:3000/chat/access",
+        { _id: userId, UserName },
+        config
+      );
+      console.log(data.chat);
+      if (data.chat && !chats.find((c) => c._id === data.chat._id)) {
+        setChats([data.chat, ...chats]);
+      }
+      setSelectedChat(data.chat);
+      console.log(data);
+      setOpenDrawer(!openDrawer);
+    } catch (err) {
+      console.log(err);
+      toaster.create({
+        title: "Error Occurred!",
+        description: "Failed to Load the chats",
+        type: "error",
+      });
+    } finally {
+      setloadingChat(false);
+    }
   };
   const handleSearch = async () => {
     if (!search) {
@@ -202,7 +238,10 @@ const SideDrawer = () => {
                 ) : (
                   <Box>
                     {searchresult?.map((user) => (
-                      <div key={user.Name} onClick={() => acessChat(user.Name)}>
+                      <div
+                        key={user.Name}
+                        onClick={() => acessChat(user._id, user.Name)}
+                      >
                         <Text
                           key={user._id}
                           padding={"2"}
@@ -227,11 +266,9 @@ const SideDrawer = () => {
                     ))}
                   </Box>
                 )}
+                {loadingChat && <Spinner ml={"auto"} display={"block"} />}
               </Drawer.Body>
-              <Drawer.Footer>
-                <Button variant="outline">Cancel</Button>
-                <Button>Save</Button>
-              </Drawer.Footer>
+              <Drawer.Footer></Drawer.Footer>
               <Drawer.CloseTrigger asChild>
                 <CloseButton
                   size="sm"
