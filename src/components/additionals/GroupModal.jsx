@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext, createContext } from "react";
 import {
   Box,
@@ -28,6 +28,7 @@ const GroupModal = ({ children }) => {
     setOpenGroupDialog,
   } = ChatState();
 
+  const [query, setQuery] = useState("");
   const [searchResult, setSearchresult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
@@ -115,6 +116,12 @@ const GroupModal = ({ children }) => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      handleSearch(query);
+    }, 500);
+    return () => clearTimeout(timerId);
+  }, [query]);
 
   return (
     <>
@@ -147,7 +154,7 @@ const GroupModal = ({ children }) => {
                   <Input
                     placeholder="Search Users"
                     mb={3}
-                    onChange={(e) => handleSearch(e.target.value)}
+                    onChange={(e) => setQuery(e.target.value)}
                   ></Input>
                   <Box
                     display={"flex"}
