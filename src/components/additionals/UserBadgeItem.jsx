@@ -1,7 +1,8 @@
 import { Box, CloseButton } from "@chakra-ui/react";
 import React from "react";
+import { ChatState } from "@/Context/ChatProvider";
 
-const UserBadgeItem = ({ user, handleFunction }) => {
+const UserBadgeItem = ({ Me, user, handleFunction }) => {
   return (
     <Box
       px={2}
@@ -11,12 +12,12 @@ const UserBadgeItem = ({ user, handleFunction }) => {
       mb={1}
       variant={"solid"}
       fontSize={12}
-      bg={"purple"}
+      bg={Me === user.Name ? "Red" : "purple"}
       color={"white"}
       cursor={"pointer"}
       onClick={() => handleFunction(user)}
     >
-      {user.Name}
+      {user.Name === Me ? "You" : user.Name}
       <CloseButton margin={1} />
     </Box>
   );
