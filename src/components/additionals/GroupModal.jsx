@@ -165,6 +165,7 @@ const GroupModal = ({ children }) => {
                     {selectedUser.map((u) => (
                       <UserBadgeItem
                         key={u._id}
+                        Me={user.UserName}
                         user={u}
                         handleFunction={handleDelete}
                       />
