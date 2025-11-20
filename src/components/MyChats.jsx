@@ -15,7 +15,7 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import GroupModal, { GroupModalState } from "./additionals/GroupModal";
-const MyChats = ({ fetchAgain }) => {
+const MyChats = ({ fetchAgain, setFetchAgain }) => {
   const { user, chats, setChats, selectedChat, setSelectedChat, token } =
     ChatState();
   const { open, setOpen, setUser, setData } = ModalState();
@@ -32,6 +32,7 @@ const MyChats = ({ fetchAgain }) => {
         "http://localhost:3000/chat/fetch",
         config
       );
+      console.log(data);
       setChats(data.chats);
     } catch (err) {
       toaster.create({
@@ -39,6 +40,8 @@ const MyChats = ({ fetchAgain }) => {
         description: "Failed to Load the chats",
         type: "error",
       });
+    } finally {
+      setFetchAgain(false);
     }
   };
   useEffect(() => {
