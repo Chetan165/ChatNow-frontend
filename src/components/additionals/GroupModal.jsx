@@ -60,7 +60,7 @@ const GroupModal = ({ children }) => {
           },
           config
         );
-        setChats([data.savedGroupChat, ...chats]);
+        setChats([data.savedGroupChat, ...(chats ? chats : [])]);
         toaster.create({
           title: "New Group Chat Created!",
           type: "success",
