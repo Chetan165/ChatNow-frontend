@@ -55,8 +55,8 @@ const SideDrawer = () => {
         config
       );
       console.log(data.chat);
-      if (data.chat && !chats.find((c) => c._id === data.chat._id)) {
-        setChats([data.chat, ...chats]);
+      if (data.chat && !chats?.find((c) => c._id === data.chat._id)) {
+        setChats([data.chat, ...[chats ? chats : null]]);
       }
       setSelectedChat(data.chat);
       console.log(data);
@@ -219,6 +219,7 @@ const SideDrawer = () => {
                     onChange={(e) => setSearch(e.target.value)}
                   ></Input>
                   <Button
+                    bg={"white"}
                     onClick={() => {
                       handleSearch();
                     }}
