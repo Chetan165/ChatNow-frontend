@@ -1,16 +1,50 @@
-# React + Vite
+# ChatNow — frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Minimal React + Vite chat frontend with authentication, one-to-one and group chat, and real-time messaging via Socket.IO.
 
-Currently, two official plugins are available:
+Quick start
+- Install & run:
+  ```sh
+  npm install
+  npm run dev
+  ```
+- Build:
+  ```sh
+  npm run build
+  npm run preview
+  ```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Major features
+- Authentication: signup & login with token storage.
+- Real-time chat: messages via Socket.IO and REST.
+- One-to-one and group chats: create and manage group members.
+- Responsive UI: built with Chakra UI primitives.
+- Typing indicator and auto-scrolling for messages.
 
-## React Compiler
+Technologies
+- React + Vite
+- Chakra UI
+- Socket.IO (client)
+- Lottie (typing animation)
+- JavaScript, CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Important files (high level)
+- App entry and router
+- Context providers for auth & chat state
+- Components: chat list, chat box, single chat, scrollable messages, side drawer
+- UI helpers: theme provider, toaster, password input
 
-## Expanding the ESLint configuration
+Config notes
+- Backend base URL is assumed to be http://localhost:3000 — update in code if different.
+- Path aliases are configured for cleaner imports.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Troubleshooting
+- Restart dev server if aliases fail to resolve.
+- Clear localStorage token to reset auth state.
+- Check console for socket connection logs.
+
+Demo:
+
+
+https://github.com/user-attachments/assets/a0f6e1db-9156-446a-83ff-e4c3e1e909f2
+
