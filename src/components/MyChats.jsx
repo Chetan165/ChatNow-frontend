@@ -20,8 +20,10 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
     ChatState();
   const { open, setOpen, setUser, setData } = ModalState();
   const [loggedUser, setLoggedUser] = React.useState();
+  const [loading, setLoading] = useState(false);
   const { openGroupDialog, setOpenGroupDialog } = ChatState();
   const fetchChats = async () => {
+    setLoading(true);
     try {
       const config = {
         headers: {
@@ -42,6 +44,7 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
       });
     } finally {
       setFetchAgain(false);
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -93,7 +96,7 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
         borderRadius={"lg"}
         overflowY={"hidden"}
       >
-        {chats.length ? (
+        {chats?.length ? (
           <Stack
             overflowY={"auto"}
             sx={{
@@ -116,33 +119,35 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
                 py={2}
                 gap={3}
                 borderRadius="lg"
-                key={chat._id}
+                key={chat?._id}
+                _hover={{ background: "#38B2AC", color: "white" }}
               >
                 <Avatar.Root size={"md"}>
                   <Avatar.Fallback
                     name={
-                      chat.isGroupChat
-                        ? chat.chatName
-                        : chat.users.find((u) => u._id !== user.User_id).Name
+                      chat?.isGroupChat
+                        ? chat?.chatName
+                        : chat?.users?.find((u) => u._id !== user.User_id).Name
                     }
                   />
                   <Avatar.Image
                     src={
-                      chat.isGroupChat
-                        ? chat.chatName
-                        : chat.users.find((u) => u._id !== user.User_id).Picture
+                      chat?.isGroupChat
+                        ? chat?.chatName
+                        : chat?.users?.find((u) => u._id !== user.User_id)
+                            .Picture
                     }
                   />
                 </Avatar.Root>
                 <Text>
-                  {chat.isGroupChat
-                    ? chat.ChatName
-                    : chat.users.find((u) => u._id !== user.User_id).Name}
+                  {chat?.isGroupChat
+                    ? chat?.ChatName
+                    : chat?.users?.find((u) => u._id !== user.User_id).Name}
                 </Text>
               </Box>
             ))}
           </Stack>
-        ) : (
+        ) : loading ? (
           <Stack gap="6" maxW="xs">
             <HStack width="full">
               <SkeletonCircle size="10" />
@@ -150,6 +155,10 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
             </HStack>
             <Skeleton height="50px" />
           </Stack>
+        ) : (
+          <Text color={"black"}>
+            No Chats Found, Search Users to start Chatting
+          </Text>
         )}
       </Box>
     </Box>

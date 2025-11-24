@@ -20,7 +20,10 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.9.6"
+    "react-lottie": "^1.2.10",
+    "react-router-dom": "^7.9.6",
+    "socket.io-client": "^4.8.1",
+    "use-stick-to-bottom": "^1.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

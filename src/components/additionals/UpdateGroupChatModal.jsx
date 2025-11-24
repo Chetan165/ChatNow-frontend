@@ -24,6 +24,7 @@ const UpdateGroupChatModal = ({
   setFetchAgain,
   openUpdateGroupDialog,
   setOpenUpdateGroupDialog,
+  loadMessages,
 }) => {
   const { chats, setChats } = ChatState();
   const { selectedChat, setSelectedChat } = ChatState();
@@ -102,6 +103,7 @@ const UpdateGroupChatModal = ({
           }
         });
         await Promise.all(results);
+        loadMessages();
         setFetchAgain(!fetchAgain);
         setSelectedChat({ ...selectedChat, users: selectedUsers });
         toaster.create({

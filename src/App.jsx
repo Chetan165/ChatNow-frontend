@@ -11,7 +11,7 @@ function App() {
   return (
     <div
       style={{
-        backgroundImage: `url(${bg})`, // your background image
+        backgroundColor: `black`, // your background image
         backgroundSize: "cover", // make it cover the whole div
         backgroundPosition: "center", // center the image
         backgroundRepeat: "no-repeat", // prevent repeating
